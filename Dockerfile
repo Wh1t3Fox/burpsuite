@@ -1,6 +1,6 @@
 from ubuntu:bionic
 
-ARG VERSION=2020.2.1
+ARG VERSION=2020.5
 
 ENV DEBIAN_FRONTEND=noninteractive
 
