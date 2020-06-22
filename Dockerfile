@@ -1,7 +1,5 @@
 from ubuntu:bionic
 
-ARG VERSION=2020.5
-
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && \
@@ -22,7 +20,9 @@ RUN apt-get update && \
 USER user
 WORKDIR /home/user
 
-RUN curl -SL -o "burp.jar" "https://portswigger.net/burp/releases/download\?product\=community\&version\=${VERSION}\&type\=Jar"
+RUN \
+  export VERSION=$(curl -qsSL https://portswigger.net/burp/releases/community/latest 2>/dev/null | grep -Po -m 1 '(?<=version=)[^&]+' | tr -d '\n') && \
+  curl -SL -o "burp.jar" "https://portswigger.net/burp/releases/download\?product\=community\&version\=${VERSION}\&type\=Jar"
 
 ENV LC_ALL=en_US.UTF-8
 ENV LC_CTYPE=en_US.UTF-8
